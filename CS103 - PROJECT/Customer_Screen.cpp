@@ -1,29 +1,25 @@
 // Customer_Screen_LoggedIn.cpp : 
-//3.	Customer screen should include:
-//�	A menu contains the following option :
-//-Policy and insurance application process(see Task 4),
-//-claim(See task 5),
-//-renewal(See task 6),
-//-benefits of NZ insurance
-
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "functions.h"
 
 // define structure for new policies
 struct Policy {	
-	char category[35],
-			vehicle[11],
-			date[10],
+	std::string category;
+	std::string vehicle;
+	char date[10],
 			vehicle_details[50];
 	float category_rate,
-			vehicle_rate;
+			vehicle_rate,
+			annual, monthly, fortnightly;
 	double sum_insured;
 
 };
 
 // function prototypes
 void line();
+void customerScreenMenu();
 void benefitsMenu();
 struct Policy newPolicy(struct Policy);
 void displayQuote(struct Policy); 
@@ -31,13 +27,28 @@ void displayPolicy();
 void renewalInfo();
 void renewalForm();
 
-// main function below
+// main function below....
 int main()
-{
-	int option;
-	struct Policy p;
+{	
+	customerScreenMenu();		// displays the main menu
 	
-	menu:
+return 0;		// end of main function
+}
+
+
+
+// function definitions
+void line() {
+	for (int i = 0; i < 40; i++) {
+		std::cout << '~';
+	}
+}
+
+void customerScreenMenu() {
+		int option;
+		struct Policy p;
+
+menu:
 	std::cout << "\n\nWELCOME TO THE CUSTOMER SCREEN\n";
 	line();
 	std::cout << "\n\n";
@@ -53,7 +64,7 @@ int main()
 	case 1:
 		p = newPolicy(p); // form
 		displayQuote(p);
-		displayPolicy(); // pass newPolicy data, ndisplay policy quote
+		// displayPolicy(); // pass newPolicy data, ndisplay policy quote
 		goto menu;
 		break;
 	case 2:
@@ -78,59 +89,7 @@ int main()
 		goto menu;
 		break;
 	}
-
-return 0;		// end of main function
-
 }
-
-
-// function definitions
-void line() {
-	for (int i = 0; i < 40; i++) {
-		std::cout << '~';
-	}
-}
-
-struct Policy newPolicy(struct Policy p) {
-	int policy, vehicle_type;
-
-			std::cout << "\nNEW POLICY APPLICATION\n";
-			line();
-			std::cout << "\n\n";
-			std::cout << "Choose a policy: (1-3)\n";
-			std::cout << "1 = Comprehensive \t2 = Third Party, Fire & Theft \t3 = Third Party Only\n\n";
-			std::cin >> policy;
-
-			std::cout << "Choose vehicle type:\n";
-			std::cout << "1 = Car \t2 = Motorcycle\n\n";
-			std::cin >> vehicle_type;
-
-			std::cout << "When would you like the policy to start? \n";
-			std::cin >> p.date;
-
-			std::cout << "Enter car/motorcycle details: (Make, Model & Year) \n";
-			std::cin >> p.vehicle_details;
-
-			std::cout << "How much is the vehicle worth? \n";
-			std::cin >> p.sum_insured;
-
-			return p;
-}
-
-void displayQuote(struct Policy p) {
-			std::cout << "\nYOUR INSURANCE POLICY QUOTE\n";
-			line();
-			std::cout << "\n\n";
-			std::cout << "Choose a policy:\n";
-// quote - policy + vehicle type * 52, follow example
-}
-
-void displayPolicy() {
-// 	policy registration -	Policy number (should be generated automatically), first name, last name, dob, gender, 
-// contact no, email, physical address, vehicle registration number, vehicle name, model.
-}
-// void renewalInfo();
-// void renewalForm();
 
 void benefitsMenu() {
 int option;
@@ -144,7 +103,8 @@ int option;
 	std::cout << "3. Renewal discount\n";
 	std::cout << "4. Discount for reviewing the insurance\n";
 	std::cout << "5. Introducing friends or family discount\n";
-	std::cout << "Please select an option:  \n";
+	std::cout << "6. Go back to Main Menu\n";
+	std::cout << "Please select an option:  ";
 	std::cin >> option;
    
 	switch (option) {
@@ -184,6 +144,8 @@ int option;
 		std::cout << "The amount of the Discount per referral is $100 for Car Comprehensive, $50 for Car Third Party Fire and Theft, and $25 for Car Third Party Only.\n";
 		goto submenu;
 		break;
+	case 6:
+		break;
 	default:
 		std::cout << "Sorry, please pick from options 1-5";
 		goto submenu;
@@ -191,3 +153,93 @@ int option;
 	}
 }
 
+struct Policy newPolicy(struct Policy p) {
+	int policy, vehicle_type;
+
+			std::cout << "\nNEW POLICY APPLICATION\n";
+			line();
+
+// ask user to select policy category
+p_menu:
+			std::cout << "\n\n";
+			std::cout << "Choose a policy: (1-3)\n";
+			std::cout << "1 = Comprehensive \t2 = Third Party, Fire & Theft \t3 = Third Party Only\n\n";
+			std::cin >> policy;
+
+// switch case to assign fixed rate for policy type
+			switch(policy) {
+				case 1:
+					p.category = "Comprehensive";
+					p.category_rate = 0.055;	 // placeholder
+					break;
+				case 2:
+					p.category = "Third Party, Fire & Theft";
+					p.category_rate = 0.044;  // placeholder
+					break;
+				case 3:
+					p.category = "Third Party Only";
+					p.category_rate = 0.033;  // placeholder
+					break;
+				default:
+					std::cout << "\nSorry, please choose from options 1-3\n";
+					goto p_menu;
+					break;
+			}
+
+// ask user to select vehicle category
+v_menu:
+			std::cout << "Choose vehicle type:\n";
+			std::cout << "1 = Car \t2 = Motorcycle\n\n";
+			std::cin >> vehicle_type;
+
+// switch case to assign fixed rate for vehicle
+			switch (vehicle_type) {
+				case 1:
+					p.vehicle = "Car";
+					p.vehicle_rate = 0.025;  // placeholder;
+					break;
+				case 2:
+					p.vehicle = "Motorcycle";
+					p.vehicle_rate = 0.010;	// placeholder
+					break;
+				default:
+					std::cout << "\nSorry please choose from option 1 or 2\n";
+					goto v_menu;
+					break;
+			}
+
+			std::cout << "When would you like the policy to start? (dd/mm/yyyy) \n";
+			std::cin >> p.date;
+
+			std::cout << "Enter car/motorcycle details: (Make, Model & Year) \n";
+			std::cin.ignore();
+			std::cin.getline(p.vehicle_details, 50);
+
+			std::cout << "How much is the vehicle worth? \n";
+			std::cin >> p.sum_insured;
+
+
+			return p;	
+}
+
+void displayQuote(struct Policy p) {
+// calculate annual, monthly and fortnightly prices
+ p.annual = (p.category_rate + p.vehicle_rate) * p.sum_insured;
+ p.monthly = p.annual / 12;
+ p.fortnightly = (p.annual / 52) * 2;
+
+// display the quote and above calculations
+			std::cout << "\nYOUR INSURANCE POLICY QUOTE\n";
+			line();
+			std::cout << "\n\n";
+			std::cout << "Your chosen policy: " << p.category << " " << p.vehicle << std::endl;
+			std::cout << "$" << p.fortnightly << " per fortnight" << std::endl;
+			std::cout << "or $" << p.monthly << " per month" << std::endl;
+			std::cout << "or $" << p.annual << " per year" << std::endl;
+
+}
+
+// still need to define:
+// void displayPolicy();
+// void renewalInfo();
+// void renewalForm();

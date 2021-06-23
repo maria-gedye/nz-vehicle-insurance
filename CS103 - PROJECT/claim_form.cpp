@@ -127,4 +127,4 @@ void line() {
         std::cout << "~";
     }
     std::cout << "\n\n";
-}
+    }

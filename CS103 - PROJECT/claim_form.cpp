@@ -11,13 +11,6 @@ Complaint details
 Contact details 
 Claim data needs to be managed by corresponding files
 */
-
-int main ()
-{
-    std::cout << "Claims Registration Screen";
-
-}
-
 void line() {
 
     std::cout << "\n\n";
@@ -26,4 +19,12 @@ void line() {
         std::cout << "~";
     }
     std::cout << "\n\n";
+}
+
+int main ()
+{
+    std::cout << "Claims Registration Screen";
+    line();
+
+    std::cout << "Insured Name ";
 }

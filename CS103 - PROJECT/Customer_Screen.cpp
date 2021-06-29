@@ -2,30 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "functions.h"
+#include "functions.h"  // import function prototypes
+#include "structures.h"  // import structures
 
-// define structure for new policies
-struct Policy {	
-	std::string category;
-	std::string vehicle;
-	char date[10],
-			vehicle_details[50];
-	float category_rate,
-			vehicle_rate,
-			annual, monthly, fortnightly;
-	double sum_insured;
-
-};
-
-// function prototypes
-void line();
-void customerScreenMenu();
-void benefitsMenu();
-struct Policy newPolicy(struct Policy);
-void displayQuote(struct Policy); 
-void displayPolicy();
-void renewalInfo();
-void renewalForm();
 
 // main function below....
 int main()
@@ -57,14 +36,15 @@ menu:
 	std::cout << "3. Renew a policy\n";
 	std::cout << "4. Benefits of insurance\n";
 	std::cout << "5. Log out\n";
-	std::cout << "Please select an option:  \n";
+	std::cout << "Please select an option:  ";
 	std::cin >> option;
    
 	switch (option) {
 	case 1:
 		p = newPolicy(p); // form
 		displayQuote(p);
-		// displayPolicy(); // pass newPolicy data, ndisplay policy quote
+		request(p);
+		displayPolicy(p); // pass newPolicy data, ndisplay policy quote
 		goto menu;
 		break;
 	case 2:
@@ -162,8 +142,9 @@ struct Policy newPolicy(struct Policy p) {
 // ask user to select policy category
 p_menu:
 			std::cout << "\n\n";
-			std::cout << "Choose a policy: (1-3)\n";
-			std::cout << "1 = Comprehensive \t2 = Third Party, Fire & Theft \t3 = Third Party Only\n\n";
+			std::cout << "1. Policy Category: (1-3)\n";
+			std::cout << "1 = Comprehensive \t2 = Third Party, Fire & Theft \t3 = Third Party Only\n";
+			std::cout << "\nChoose a policy category:  ";
 			std::cin >> policy;
 
 // switch case to assign fixed rate for policy type
@@ -188,8 +169,9 @@ p_menu:
 
 // ask user to select vehicle category
 v_menu:
-			std::cout << "Choose vehicle type:\n";
-			std::cout << "1 = Car \t2 = Motorcycle\n\n";
+			std::cout << "\n2. Vehicle type:\n";
+			std::cout << "1 = Car \t2 = Motorcycle\n";
+			std::cout << "\nChoose vehicle type:  ";
 			std::cin >> vehicle_type;
 
 // switch case to assign fixed rate for vehicle
@@ -208,14 +190,14 @@ v_menu:
 					break;
 			}
 
-			std::cout << "When would you like the policy to start? (dd/mm/yyyy) \n";
+			std::cout << "\nWhen would you like the policy to start? (dd/mm/yyyy) \n";
 			std::cin >> p.date;
 
-			std::cout << "Enter car/motorcycle details: (Make, Model & Year) \n";
+			std::cout << "\nEnter car/motorcycle details: (Make, Model & Year) \n";
 			std::cin.ignore();
 			std::cin.getline(p.vehicle_details, 50);
 
-			std::cout << "How much is the vehicle worth? \n";
+			std::cout << "\nHow much is the vehicle worth? \n";
 			std::cin >> p.sum_insured;
 
 
@@ -223,6 +205,7 @@ v_menu:
 }
 
 void displayQuote(struct Policy p) {
+
 // calculate annual, monthly and fortnightly prices
  p.annual = (p.category_rate + p.vehicle_rate) * p.sum_insured;
  p.monthly = p.annual / 12;
@@ -233,13 +216,58 @@ void displayQuote(struct Policy p) {
 			line();
 			std::cout << "\n\n";
 			std::cout << "Your chosen policy: " << p.category << " " << p.vehicle << std::endl;
-			std::cout << "$" << p.fortnightly << " per fortnight" << std::endl;
-			std::cout << "or $" << p.monthly << " per month" << std::endl;
-			std::cout << "or $" << p.annual << " per year" << std::endl;
+			std::cout << "\n$" << p.fortnightly << " per fortnight" << std::endl;
+			std::cout << "...or $" << p.monthly << " per month" << std::endl;
+			std::cout << "...or $" << p.annual << " per year" << std::endl;
 
+// end of function
+}
+
+int request(struct Policy p) {
+	start:
+		char answer;
+		int answer2;
+			std::cout << "\nWould you like to go ahead with this quote and register this policy? (y/n)" << std::endl;
+			std::cin >> answer;
+			if (answer == 'n') {
+			menu:
+				std::cout << "\nWould you like to: " << std::endl;
+				std::cout << "1 = Start a new quote " << std::endl;
+				std::cout << "2 = Go back to Customer Menu" << std::endl;
+				std::cin >> answer2;
+
+				switch(answer2) {
+					case 1:
+						newPolicy(p);
+						displayQuote(p);
+						goto start;
+						break;
+					case 2:
+						customerScreenMenu();
+						break;
+					default:
+						std::cout << "\nPlease choose option 1 or 2" << std::endl;
+						std::cout << answer2 << std::endl;
+						goto menu;
+						break;
+				}
+			} else if (answer == 'y') {
+				displayPolicy(p);
+			} else {
+				std::cout << "\nSorry please type 'y' for yes or 'n' for no " << std::endl;
+				goto start;
+			}
+
+			return answer2;
+}
+
+// -	Policy number (should be generated automatically), first name, last name, 
+// dob, gender, contact no, email, physical address, vehicle registration number, 
+// vehicle name, model.
+void displayPolicy(struct Policy p) {
+	// when user says yes to register quote this is the next function that is called
 }
 
 // still need to define:
-// void displayPolicy();
 // void renewalInfo();
 // void renewalForm();

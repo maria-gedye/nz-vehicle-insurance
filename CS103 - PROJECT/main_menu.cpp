@@ -1,12 +1,54 @@
 #include <iostream>
 #include <string>
+#include "functions.h"  // import function prototypes
+#include "structures.h"  // import structures
 
 // declare variables 
-int user_choice;
+int user_choice, count = 0;
 std::string username, password, admin_n, admin_p;
+bool flag;
 
-//define functions 
-void line()
+
+int main ()
+{
+start:
+    menu(); // calling the menu function 
+    switch(user_choice) // switch case for the implementation of the appropriate menus 
+    {
+        case 1:
+        retry:
+        Customer_Login();
+        flag = validation(username, password);
+        if (flag) {
+            std::cout << "\nLog in successful" << std::endl;
+            customerScreenMenu();
+        } else {
+            std::cout << "\nSorry, username or password was wrong" << std::endl; 
+            count++;
+            if (count < 3)
+            goto retry;
+            else {
+            std::cout << "\nSorry, there have been too many unsuccessful attempts. Please wait before trying again" << std::endl; 
+            goto start;
+            }
+        }
+        break;
+
+        case 2:
+        Admin_login();
+        break;
+
+        case 3:
+        Contact();
+        break;
+
+        default:
+        std::cout << "Please input a valid option ";
+    }
+ }
+
+// function definitions below
+ void line()
 {
     std::cout << "\n\t\t~~~~~~~~~~~~~~~~~";
 }
@@ -25,7 +67,6 @@ void menu() // menu for the user to choose from
     std::cout << "\n\nPlease select an option : ";
     std::cin >> user_choice;
 }
-
 
 void Customer_Login() // login details 
 {
@@ -65,29 +106,6 @@ std::cout <<"\ncustomerhelp@evolveinsurance.co.nz\n";
 
 }
 
-int main ()
-{
-    for(int i = 0; i < 3; i++) // for loop to continue displaying the menu once the option has been executed 
-    {
+bool validation(std::string a, std::string b) {
 
-    menu(); // calling the menu function 
-
-    switch(user_choice) // switch case for the implementation of the appropriate menus 
-    {
-        case 1:
-        Customer_Login();
-        break;
-
-        case 2:
-        Admin_login();
-        break;
-
-        case 3:
-        Contact();
-        break;
-
-        default:
-        std::cout << "Please input a valid option ";
-    }
- }
 }

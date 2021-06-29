@@ -10,9 +10,11 @@ struct Customer{
 				birthday[10], 
 				email[30], 
 				rego[6],
-				licence[8];
+				licence[8],
+				user_name[30],	// needs to be char [] for comparison
+				password[30];	// needs to be char [] for comparison
     int phone;
-    std::string address, user_name, password;
+    std::string address;
 };
 
 // structure for new policies
@@ -23,7 +25,9 @@ struct Policy {
 			vehicle_details[50];
 	float category_rate,
 			vehicle_rate,
-			annual, monthly, fortnightly;
+			annual, 
+			monthly, 
+			fortnightly;
 	double sum_insured;
 };
 

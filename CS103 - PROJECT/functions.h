@@ -6,9 +6,12 @@ void menu();
 void Customer_Login();
 void Admin_login();
 void Contact();
-bool validation(std::string, std::string);
+bool customer_validation(char[], char[]);
+bool admin_validation(char[], char[]);
+void loginStatus(bool);
 
 // 2. Customer Registration Screen
+void readCustomer(struct Customer&);
 
 // 3. Customer Screen
 void customerScreenMenu();

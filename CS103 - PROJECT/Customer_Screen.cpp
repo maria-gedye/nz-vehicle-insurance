@@ -7,28 +7,22 @@
 
 
 // main function below....
-int main()
-{	
-	customerScreenMenu();		// displays menu - delete this when integrating with main menu
+// int main()
+// {	
+// 	customerScreenMenu();		// displays menu - delete this when integrating with main menu
 	
-return 0;		// end of main function
-}
+// return 0;		// end of main function
+// }
 
 
 
 // function definitions
-void line() {
-	for (int i = 0; i < 40; i++) {
-		std::cout << '~';
-	}
-}
-
 void customerScreenMenu() {
 		int option;
 		struct Policy p;
 
 menu:
-	std::cout << "\n\nWELCOME TO THE CUSTOMER SCREEN\n";
+	std::cout << "\n\n\t\tWELCOME TO THE CUSTOMER SCREEN";
 	line();
 	std::cout << "\n\n";
 	std::cout << "1. New policy application\n";
@@ -62,7 +56,7 @@ menu:
 		break;
 	case 5:
 		std::cout << "\nYou have been logged out\n";
-		// link to vehicle_insurance.cpp
+		menu();
 		break;
 	default:
 		std::cout << "Sorry, please pick from options 1-5";
@@ -75,7 +69,7 @@ void benefitsMenu() {
 int option;
 
 	submenu:
-	std::cout << "\n\nINSURANCE BENEFITS\n";
+	std::cout << "\n\n\t\tINSURANCE BENEFITS";
 	line();
 	std::cout << "\n\n";
 	std::cout << "1. New signup discounts\n";
@@ -136,14 +130,17 @@ int option;
 struct Policy newPolicy(struct Policy p) {
 	int policy, vehicle_type;
 
-			std::cout << "\nNEW POLICY APPLICATION\n";
+			std::cout << "\n\t\tNEW POLICY APPLICATION";
 			line();
 
 // ask user to select policy category
 p_menu:
 			std::cout << "\n\n";
-			std::cout << "1. Policy Category: (1-3)\n";
-			std::cout << "1 = Comprehensive \t2 = Third Party, Fire & Theft \t3 = Third Party Only\n";
+			std::cout << "Our Policy Categories: \n\n";
+			std::cout << "\t\t\t\t\t1. Comprehensive \t\t2. Third Party, Fire & Theft \t3. Third Party Only\n";
+			std::cout << "Accidental loss or damage to your car\tYes \t\tYes \tNo\n";
+			std::cout << "Damage to someone else's vehicle or property\tYes\t\tYes \tYes\n";
+			std::cout << "Transport expenses\t\t\t\tYes\t\tNo \tNo\n";
 			std::cout << "\nChoose a policy category:  ";
 			std::cin >> policy;
 
@@ -169,8 +166,9 @@ p_menu:
 
 // ask user to select vehicle category
 v_menu:
-			std::cout << "\n2. Vehicle type:\n";
-			std::cout << "1 = Car \t2 = Motorcycle\n";
+			std::cout << "\nVehicle type (fixed rate)\n";
+			std::cout << "1. Car \t\t\t2. Motorcycle\n";
+			std::cout << "   0.025% \t   0.010%\n";
 			std::cout << "\nChoose vehicle type:  ";
 			std::cin >> vehicle_type;
 
@@ -212,7 +210,7 @@ void displayQuote(struct Policy p) {
  p.fortnightly = (p.annual / 52) * 2;
 
 // display the quote and above calculations
-			std::cout << "\nYOUR INSURANCE POLICY QUOTE\n";
+			std::cout << "\n\t\tYOUR INSURANCE POLICY QUOTE";
 			line();
 			std::cout << "\n\n";
 			std::cout << "Your chosen policy: " << p.category << " " << p.vehicle << std::endl;

@@ -9,7 +9,7 @@
 // main function below....
 int main()
 {	
-	customerScreenMenu();		// displays the main menu
+	customerScreenMenu();		// displays menu - delete this when integrating with main menu
 	
 return 0;		// end of main function
 }

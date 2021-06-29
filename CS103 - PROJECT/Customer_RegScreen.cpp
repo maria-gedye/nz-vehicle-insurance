@@ -1,19 +1,8 @@
 #include <iostream>
 #include <string.h>
 #include <fstream>
-
-void line();
-
-//create structure for customer information 
-struct Customer{
-    char first_name[20], last_name[20], gender[6], birthday[10], email[30], rego[6],licence[8];
-
-    std::string address;
-
-    int phone;
-
-    std::string user_name, password;
-};
+#include "functions.h"  // import function prototypes
+#include "structures.h"  // import structures
 
 int main()
 {

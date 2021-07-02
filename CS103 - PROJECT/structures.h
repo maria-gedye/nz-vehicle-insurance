@@ -17,6 +17,22 @@ struct Customer{
     std::string address;
 };
 
+// structure for admin capabilities
+struct Admin {
+	char user_name[20],
+			password[20],
+			discount_signup[220],
+			discount_multi[292],
+			discount_renewal[145],
+			discount_review[286],
+			discount_friend[295],
+			policy_description[355];
+	int customer_counter,
+			claim_counter,
+			renewal_counter,
+			new_reg_counter;
+};
+
 // structure for new policies
 struct Policy {	
 	std::string category;

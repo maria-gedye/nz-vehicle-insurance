@@ -6,7 +6,7 @@
 #include "structures.h"  // import structures
 
 
-// main function below....
+// main function for testing...
 // int main()
 // {	
 // 	customerScreenMenu();		// displays menu - delete this when integrating with main menu
@@ -65,8 +65,11 @@ menu:
 	}
 }
 
+// LINK this to admin.dat file to read current discounts
 void benefitsMenu() {
 int option;
+Admin display;
+std::fstream file;
 
 	submenu:
 	std::cout << "\n\n\t\tINSURANCE BENEFITS";
@@ -80,42 +83,39 @@ int option;
 	std::cout << "6. Go back to Main Menu\n";
 	std::cout << "Please select an option:  ";
 	std::cin >> option;
+
+file.open("admins.dat", std::ios::in|std::ios::binary);
+if(file.is_open()) {
+	file.read(reinterpret_cast<char*>(&display), sizeof(Admin));
+	file.close();
+} else {
+	std::cout << "\nUh oh. Discount information unavailable\n";
+}
    
 	switch (option) {
 	case 1:
 		std::cout << "\nNEW SIGNUP DISCOUNT:\n";
-		std::cout << "All customers will receive a discount off their first year’s premium for each car insurance policy bought online.\n";
-		std::cout << "The amount of the Discount is $50 for Car Comprehensive, $25 for Car Third Party Fire and Theft, and $10 for Car Third Party Only.\n";
+		std::cout << display.discount_signup << std::endl;
 		goto submenu;
 		break;
 	case 2:
 		std::cout << "\nMULTI POLICY DISCOUNT:\n";
-		std::cout << "To qualify for our Multi-Policy Discount, you must have a Car Comprehensive policy plus one other qualifying policy. These are: \n";
-		std::cout << "• Car Third Party Fire and Theft \n";
-		std::cout << "• Car Third Party Only \n";
-		std::cout << "• Motorcycle Comprehensive \n";
-		std::cout << "• Motorcycle Third Party Only \n";
-		std::cout << "\nThe amount of the Discount is 10% \n";
+		std::cout << display.discount_multi << std::endl;
 		goto submenu;
 		break;
 	case 3:
 		std::cout << "\nRENEWAL DISCOUNT:\n";
-		std::cout << "If you have held your insurance policy with us for more than a year you may qualify for this discount. \n";
-		std::cout << "\nThe amount of the Discount is 5% \n";
+		std::cout << display.discount_renewal<< std::endl;
 		goto submenu;
 		break;
 	case 4:
 		std::cout << "\nREVIEW DISCOUNT\n";
-		std::cout << "To qualify for our Review Discount, you nust have had a Car or Motorcycle Third Party Only policy for at least one year before upgrading to another qualifying policy. These are:  \n";
-		std::cout << "• Car Third Party Fire and Theft \n";
-		std::cout << "• Motorcycle Comprehensive \n";
-		std::cout << "\nThe amount of the Discount is 7.5% \n";
+		std::cout << display.discount_review<< std::endl;
 		goto submenu;
 		break;
 	case 5:
 		std::cout << "\nINTRODUCE A FRIEND OR FAMILY:\n";
-		std::cout << "All customers will receive a discount off their first year’s premium for each friend or family member that purchases an insurance policy with us.\n";
-		std::cout << "The amount of the Discount per referral is $100 for Car Comprehensive, $50 for Car Third Party Fire and Theft, and $25 for Car Third Party Only.\n";
+		std::cout << display.discount_friend << std::endl;
 		goto submenu;
 		break;
 	case 6:
@@ -129,6 +129,8 @@ int option;
 
 struct Policy newPolicy(struct Policy p) {
 	int policy, vehicle_type;
+	Admin display; 
+	std::fstream file;
 
 			std::cout << "\n\t\tNEW POLICY APPLICATION";
 			line();
@@ -136,11 +138,19 @@ struct Policy newPolicy(struct Policy p) {
 // ask user to select policy category
 p_menu:
 			std::cout << "\n\n";
-			std::cout << "Our Policy Categories: \n\n";
-			std::cout << "\t\t\t\t\t1. Comprehensive \t\t2. Third Party, Fire & Theft \t3. Third Party Only\n";
-			std::cout << "Accidental loss or damage to your car\tYes \t\tYes \tNo\n";
-			std::cout << "Damage to someone else's vehicle or property\tYes\t\tYes \tYes\n";
-			std::cout << "Transport expenses\t\t\t\tYes\t\tNo \tNo\n";
+			std::cout << "Current Policy Information & Vehicle Rates \n";
+			line2();
+						std::cout << "\nPlease read through info before choosing the right policy for you\n\n";
+// READ from Admin file
+file.open("admins.dat", std::ios::in|std::ios::binary);
+if(file.is_open()) {
+	file.read(reinterpret_cast<char*>(&display), sizeof(Admin));
+	file.close();
+} else {
+	std::cout << "\nOops. Policy description unavailable\n";
+}
+	std::cout << display.policy_description << std::endl;
+
 			std::cout << "\nChoose a policy category:  ";
 			std::cin >> policy;
 
@@ -148,15 +158,15 @@ p_menu:
 			switch(policy) {
 				case 1:
 					p.category = "Comprehensive";
-					p.category_rate = 0.055;	 // placeholder
+					p.category_rate = 0.055;	
 					break;
 				case 2:
 					p.category = "Third Party, Fire & Theft";
-					p.category_rate = 0.044;  // placeholder
+					p.category_rate = 0.044;  
 					break;
 				case 3:
 					p.category = "Third Party Only";
-					p.category_rate = 0.033;  // placeholder
+					p.category_rate = 0.033;  
 					break;
 				default:
 					std::cout << "\nSorry, please choose from options 1-3\n";
@@ -166,9 +176,7 @@ p_menu:
 
 // ask user to select vehicle category
 v_menu:
-			std::cout << "\nVehicle type (fixed rate)\n";
-			std::cout << "1. Car \t\t\t2. Motorcycle\n";
-			std::cout << "   0.025% \t   0.010%\n";
+
 			std::cout << "\nChoose vehicle type:  ";
 			std::cin >> vehicle_type;
 
@@ -176,11 +184,11 @@ v_menu:
 			switch (vehicle_type) {
 				case 1:
 					p.vehicle = "Car";
-					p.vehicle_rate = 0.025;  // placeholder;
+					p.vehicle_rate = 500.00;  
 					break;
 				case 2:
 					p.vehicle = "Motorcycle";
-					p.vehicle_rate = 0.010;	// placeholder
+					p.vehicle_rate = 250.00;	
 					break;
 				default:
 					std::cout << "\nSorry please choose from option 1 or 2\n";
@@ -205,7 +213,7 @@ v_menu:
 void displayQuote(struct Policy p) {
 
 // calculate annual, monthly and fortnightly prices
- p.annual = (p.category_rate + p.vehicle_rate) * p.sum_insured;
+ p.annual = (p.sum_insured * p.category_rate) + p.vehicle_rate;
  p.monthly = p.annual / 12;
  p.fortnightly = (p.annual / 52) * 2;
 
@@ -263,7 +271,7 @@ int request(struct Policy p) {
 // dob, gender, contact no, email, physical address, vehicle registration number, 
 // vehicle name, model.
 void displayPolicy(struct Policy p) {
-	// when user says yes to register quote this is the next function that is called
+	// when user says yes to register quote this is the next function that is called within request()
 }
 
 // still need to define:

@@ -6,20 +6,11 @@
 #include "structures.h"  // import structures
 
 
-// main function for testing...
-// int main()
-// {	
-// 	customerScreenMenu();		// displays menu - delete this when integrating with main menu
-	
-// return 0;		// end of main function
-// }
-
-
-
 // function definitions
 void customerScreenMenu() {
 		int option;
 		struct Policy p;
+		struct Customer c; // needs to pass thru function
 
 menu:
 	std::cout << "\n\n\t\tWELCOME TO THE CUSTOMER SCREEN";
@@ -37,12 +28,12 @@ menu:
 	case 1:
 		p = newPolicy(p); // form
 		displayQuote(p);
-		request(p);
-		displayPolicy(p); // pass newPolicy data, ndisplay policy quote
+		request(p, c); // user chooses to apply or not
+		displayPolicy(p, c); 
 		goto menu;
 		break;
 	case 2:
-				// link to claim_form.cpp;
+		claimForm();
 		goto menu;
 		break;
 	case 3:
@@ -65,7 +56,6 @@ menu:
 	}
 }
 
-// LINK this to admin.dat file to read current discounts
 void benefitsMenu() {
 int option;
 Admin display;
@@ -140,7 +130,7 @@ p_menu:
 			std::cout << "\n\n";
 			std::cout << "Current Policy Information & Vehicle Rates \n";
 			line2();
-						std::cout << "\nPlease read through info before choosing the right policy for you\n\n";
+						std::cout << "\nPlease read through info before choosing the right policy for you (recommend viewing in full-screen)\n\n";
 // READ from Admin file
 file.open("admins.dat", std::ios::in|std::ios::binary);
 if(file.is_open()) {
@@ -229,7 +219,7 @@ void displayQuote(struct Policy p) {
 // end of function
 }
 
-int request(struct Policy p) {
+int request(struct Policy& p, struct Customer& c) {
 	start:
 		char answer;
 		int answer2;
@@ -258,7 +248,7 @@ int request(struct Policy p) {
 						break;
 				}
 			} else if (answer == 'y') {
-				displayPolicy(p);
+				displayPolicy(p, c);
 			} else {
 				std::cout << "\nSorry please type 'y' for yes or 'n' for no " << std::endl;
 				goto start;
@@ -267,11 +257,31 @@ int request(struct Policy p) {
 			return answer2;
 }
 
-// -	Policy number (should be generated automatically), first name, last name, 
-// dob, gender, contact no, email, physical address, vehicle registration number, 
-// vehicle name, model.
-void displayPolicy(struct Policy p) {
-	// when user says yes to register quote this is the next function that is called within request()
+void displayPolicy(struct Policy& p, struct Customer& c) {
+	std::fstream file;
+
+	std::cout << "\nCongratulations! Your insurance policy has been registered\n";
+	line2();
+	std::cout<< "Policy Number:  " << std::endl;	// need to generate random number
+
+file.open("customers.dat", std::ios::in|std::ios::binary);
+if(file.is_open()) {
+	file.read(reinterpret_cast<char*>(&c), sizeof(Customer));
+	file.close();
+} else {
+	std::cout << "\nUh oh. Data unavailable\n";
+}
+
+	std::cout<< "\n~~Driver's Details~~  " << std::endl;
+	std::cout<< "Name:  " << c.first_name << " " << c.last_name << std::endl;
+	std::cout<< "Date of birth:  " << c.birthday << std::endl; // fix this line
+	std::cout<< "Gender:  " << c.gender << std::endl;
+	std::cout<< "Contact number:  " << c.phone << std::endl;
+	std::cout<< "Email:  " << c.email << std::endl;
+	std::cout<< "Home address:  " << c.address << std::endl; // needs getline
+	std::cout<< "~~Vehicle Details~~  " << std::endl;
+	std::cout<< "Registration Number:  " << c.rego << std::endl;
+	std::cout<< "Make, Model & Year:  " << p.vehicle_details << std::endl;
 }
 
 // still need to define:

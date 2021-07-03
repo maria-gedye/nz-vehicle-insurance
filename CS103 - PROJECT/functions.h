@@ -22,18 +22,24 @@ void benefitsMenu();
 // 4. Insurance Policy Screen
 struct Policy newPolicy(struct Policy);
 void displayQuote(struct Policy); 
-int request(struct Policy);
-void displayPolicy(struct Policy);
+int request(struct Policy&, struct Customer&);
 
 // 5. Claim Registration Screen
+void claimForm(struct Admin&);
+
 // 6. Renewal Screen
+// to be defined
+void renewalInfo();
+void renewalForm();
 
 // 7. Admin Screen
 void adminSetup();
 void adminScreenMenu();
+void customerReport(struct Admin&);
+void claimsReport(struct Admin&);
+void renewalsReport(struct Admin&); 
+void newRegReport(struct Admin&);
+void updateMenu(struct Admin&); 
 
 // 8. Policy Registation Screen
-
-// to be defined
-void renewalInfo();
-void renewalForm();
+void displayPolicy(struct Policy&, struct Customer&);

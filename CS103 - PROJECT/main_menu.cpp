@@ -27,7 +27,7 @@ void line()
 
 void line2()
 {
-    for(int i = 0; i < 80; i++) {
+    for(int i = 0; i < 60; i++) {
         std::cout << "~";
     };
     std::cout << "\n";
@@ -111,7 +111,7 @@ retry:
             goto retry;
         }
         break;
-// TODO: preset admin file with login details
+
         case 2: 
         adminLogin();
         aflag = adminValidation(admin_n, admin_p);

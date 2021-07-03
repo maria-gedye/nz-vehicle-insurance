@@ -12,9 +12,9 @@ struct Customer{
 				rego[6],
 				licence[8],
 				user_name[30],	// needs to be char [] for comparison
-				password[30];	// needs to be char [] for comparison
-    int phone;
-    std::string address;
+				password[30],	// needs to be char [] for comparison
+  		  phone[14],
+				address[45];
 };
 
 // structure for admin capabilities
@@ -47,4 +47,19 @@ struct Policy {
 	double sum_insured;
 };
 
-// add in claims structure
+// claims structure
+struct Claims { 
+    char name[50], 
+				date[10],
+				time[7], 
+				incident[100], 
+				damage[100], 
+				email[30]; // insured person details 
+    int policynum, ph; 
+
+    // driver details 'd' - driver
+    char dfn[30], dln[30], ddob[15], demail[30], dlicence;
+    int dph;
+    std::string daddress; 
+ 
+};

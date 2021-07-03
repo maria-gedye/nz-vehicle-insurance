@@ -4,6 +4,10 @@
 #include "functions.h"  // import function prototypes
 #include "structures.h"  // import structures
 
+// ERRORS that need fixing:
+// registering new user skips username field in the login part
+// when dob is read from file, email hangs off it
+// when address is read only first word appears
 
 void readCustomer(struct Customer& c)  {
     std::fstream file;
@@ -49,21 +53,11 @@ void readCustomer(struct Customer& c)  {
 
         std::cout << "Enter licence number : ";
         std::cin >> c.licence;
-        
-        std::cout << "Enter address : ";
-        std::cin >> c.address;
 
-        //storing and formatting the file
-        // file << c.first_name << "\n";
-        // file << c.last_name << "\n";
-        // file << c.user_name << "\n";
-        // file << c.password << "\n";
-        // file << c.birthday << "\n";
-        // file << c.email << "\n";
-        // file << c.phone << "\n";
-        // file << c.rego << "\n";
-        // file << c.licence << "\n";
-        // file << c.address << "\n";
+        std::cin.ignore(); // switching to different getline input
+        std::cout << "Enter address : ";
+        std::cin.getline(c.address, 45);
+
        } 
     
 // converting above info to binary in the file

@@ -6,14 +6,14 @@
 struct Customer{
     char first_name[20], 
 				last_name[20], 
+				user_name[30],	// needs to be char [] for comparison
+				password[30],	// needs to be char [] for comparison
 				gender[6], 
 				birthday[10], 
 				email[30], 
+  		  phone[14],
 				rego[6],
 				licence[8],
-				user_name[30],	// needs to be char [] for comparison
-				password[30],	// needs to be char [] for comparison
-  		  phone[14],
 				address[45];
 };
 
@@ -54,12 +54,8 @@ struct Claims {
 				time[7], 
 				incident[100], 
 				damage[100], 
-				email[30]; // insured person details 
-    int policynum, ph; 
+				email[30],
+				phone[14]; // insured person details 
+    int policynum; 
 
-    // driver details 'd' - driver
-    char dfn[30], dln[30], ddob[15], demail[30], dlicence;
-    int dph;
-    std::string daddress; 
- 
 };

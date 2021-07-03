@@ -35,11 +35,11 @@ void renewalForm();
 // 7. Admin Screen
 void adminSetup();
 void adminScreenMenu();
-void customerReport(struct Admin&);
-void claimsReport(struct Admin&);
-void renewalsReport(struct Admin&); 
-void newRegReport(struct Admin&);
-void updateMenu(struct Admin&); 
+void customerReport();
+void claimsReport();
+void renewalsReport(); 
+void newRegReport();
+void updateMenu(); 
 
 // 8. Policy Registation Screen
 void displayPolicy(struct Policy&, struct Customer&);

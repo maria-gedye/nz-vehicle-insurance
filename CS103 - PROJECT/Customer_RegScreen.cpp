@@ -38,22 +38,22 @@ void readCustomer(struct Customer& c)  {
 
         std::cout << "Enter gender : ";
         std::cin >> c.gender;
-        
+
         std::cout << "Enter date of birth : (dd/mm/yyyy) ";
-        std::cin >> c.birthday;
+       std::cin >> c.birthday;
 
         std::cout << "Enter email address : ";
-        std::cin >> c.email;
+       std::cin >> c.email;
 
         std::cout << "Enter contact number : ";
-        std::cin >> c.phone;
+       std::cin >> c.phone;
 
         std::cout << "Enter vehicle registration number : ";
-        std::cin >> c.rego;
+       std::cin >> c.rego;
 
         std::cout << "Enter licence number : ";
-        std::cin >> c.licence;
-
+       std::cin >> c.licence;
+       
         std::cin.ignore(); // switching to different getline input
         std::cout << "Enter address : ";
         std::cin.getline(c.address, 45);

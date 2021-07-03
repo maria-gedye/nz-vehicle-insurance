@@ -11,6 +11,7 @@ void customerScreenMenu() {
 		int option;
 		struct Policy p;
 		struct Customer c; // needs to pass thru function
+		struct Admin a; // needs to pass thru function
 
 menu:
 	std::cout << "\n\n\t\tWELCOME TO THE CUSTOMER SCREEN";
@@ -33,7 +34,7 @@ menu:
 		goto menu;
 		break;
 	case 2:
-		claimForm();
+		claimForm(a);
 		goto menu;
 		break;
 	case 3:

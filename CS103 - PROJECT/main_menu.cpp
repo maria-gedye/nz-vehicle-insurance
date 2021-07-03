@@ -7,6 +7,7 @@
 int user_choice, choice2;
 char email[30], username[30], password[30], admin_n[30], admin_p[30];
 bool cflag, aflag;
+const int SIZE = 20;
 
 // main function below...
 int main ()
@@ -93,7 +94,6 @@ retry:
         if (choice2 == 1) {
 
             readCustomer(c);
-            std::cin.ignore();
             customerLogin();
             cflag = customerValidation(username, password);
             cLoginOutcome(cflag);
@@ -116,6 +116,7 @@ retry:
         adminLogin();
         aflag = adminValidation(admin_n, admin_p);
         aLoginOutcome(aflag);
+        adminScreenMenu();
         goto start;
         break;
 
@@ -132,7 +133,6 @@ retry:
 
 void customerLogin() // login details 
 {
-std::cin.ignore();
 std::cout << "\nLogin to MyEvolve Insurance";
 std::cout << "\n\nEmail or Username : ";
 std::cin.getline(username, 30);
@@ -171,26 +171,31 @@ std::cout <<"\ncustomerhelp@evolveinsurance.co.nz\n";
 }
 
 bool customerValidation(char field1[30], char field2[30]) {
-    Customer c;
+    Customer all_customers[SIZE];
     std::fstream file;
     bool flag;
 
     file.open("customers.dat", std::ios::in|std::ios::binary);
 
     if (file.is_open()) {
+
         while (!file.eof()) {
-            file.read(reinterpret_cast<char*>(&c), sizeof(c));
+
+            file.read(reinterpret_cast<char*>(all_customers), SIZE * sizeof(Customer));
 
             // compare user input with whats stored in the customers file
-            if ((strcmp(field1, c.email) == 0) || (strcmp(field1, c.user_name) == 0)) {
-                if (strcmp(field2, c.password) == 0)
+        for(int i = 0; i < SIZE; i++) {
+            if ((strcmp(field1, all_customers[i].email) == 0) || (strcmp(field1, all_customers[i].user_name) == 0)) {
+                if (strcmp(field2, all_customers[i].password) == 0) {
                 flag = true;
                 break;
-            } else
-            flag = false;
-        }
+                } else
+                    flag = false;
+            }
+        } // end of loop
+        } // end of file
     } else
-    std::cout << "\nFile error. Please contact admin\n";
+        std::cout << "\nFile error. Please contact admin\n";
 
     return flag;
 }

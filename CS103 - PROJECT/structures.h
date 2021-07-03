@@ -45,6 +45,7 @@ struct Policy {
 			monthly, 
 			fortnightly;
 	double sum_insured;
+	int policynum; 
 };
 
 // claims structure
@@ -55,7 +56,7 @@ struct Claims {
 				incident[100], 
 				damage[100], 
 				email[30],
-				phone[14]; // insured person details 
+				phone[14];
     int policynum; 
 
 };

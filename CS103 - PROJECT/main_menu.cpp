@@ -93,17 +93,17 @@ retry:
 
         if (choice2 == 1) {
 
-            readCustomer(c);
+            c = readCustomer(c);
             customerLogin();
             cflag = customerValidation(username, password);
-            cLoginOutcome(cflag);
+            cLoginOutcome(cflag, c);
             goto start;
 
         } else if (choice2 == 2) {
-
+        std::cin.ignore();
         customerLogin();
         cflag = customerValidation(username, password);
-        cLoginOutcome(cflag);
+        cLoginOutcome(cflag, c);
         goto start;
 
         } else {
@@ -200,13 +200,13 @@ bool customerValidation(char field1[30], char field2[30]) {
     return flag;
 }
 
-void cLoginOutcome(bool f) {
+void cLoginOutcome(bool f, struct Customer& c) {
     int count = 0;
 
 start:
     if (f) {
         std::cout << "\n** Log in successful **" << std::endl;
-        customerScreenMenu();
+        customerScreenMenu(c);
     } else {
         std::cout << "\nSorry, username or password was wrong. Press enter to try again" << std::endl; 
         count++;

@@ -5,10 +5,12 @@
 #include "structures.h"  // import structures
 
 
-void claimForm(struct Admin& a)
+int claimForm(struct Admin& a)
 {
     Claims info; 
+    int c;
     std::fstream file; 
+
     file.open("claims.dat", std::ios::out | std::ios::app | std::ios::binary);
     
     std::cout << "\n\n\t\tClaims Registration Screen";
@@ -35,6 +37,7 @@ void claimForm(struct Admin& a)
 
         std::cout << "\nTime : ";
         std::cin >> info.time;
+
         std::cin.ignore();
         std:: cout << "\nDescription of Incident : ";
         std::cin.getline(info.incident, 100);
@@ -54,10 +57,12 @@ void claimForm(struct Admin& a)
     file.write(reinterpret_cast<char*>(&info), sizeof(Claims)); // test that this is writing to the file
     file.close(); 
         std::cout << "\nThank you, your claim is now being processed. We will contact you in 48hrs\n";
-    a.claim_counter++;  // for every claim written to file, increase by 1
+    c = a.claim_counter++;  // for every claim written to file, increase by 1
 
     } else {
         std::cout << "\nError, claims file not found\n";
     }
+
+return c;
 
 }

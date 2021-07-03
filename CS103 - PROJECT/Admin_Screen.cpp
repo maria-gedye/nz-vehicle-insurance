@@ -110,6 +110,7 @@ if(!flag) {
 
 }
 
+// Error: Does not count the claims at all
 void claimsReport() {
   Admin a;
   std::cout << "\n\t\tCLAIMS REPORT";

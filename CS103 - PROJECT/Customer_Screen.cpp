@@ -2,15 +2,15 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <time.h>
 #include "functions.h"  // import function prototypes
 #include "structures.h"  // import structures
 
 
 // function definitions
-void customerScreenMenu() {
+void customerScreenMenu(struct Customer& c) {
 		int option;
 		struct Policy p;
-		struct Customer c; // needs to pass thru function
 		struct Admin a; // needs to pass thru function
 
 menu:
@@ -30,7 +30,6 @@ menu:
 		p = newPolicy(p); // form
 		displayQuote(p);
 		request(p, c); // user chooses to apply or not
-		displayPolicy(p, c); 
 		goto menu;
 		break;
 	case 2:
@@ -240,7 +239,7 @@ int request(struct Policy& p, struct Customer& c) {
 						goto start;
 						break;
 					case 2:
-						customerScreenMenu();
+						customerScreenMenu(c);
 						break;
 					default:
 						std::cout << "\nPlease choose option 1 or 2" << std::endl;
@@ -258,31 +257,51 @@ int request(struct Policy& p, struct Customer& c) {
 			return answer2;
 }
 
+// ERRORS: 
+// dob field also prints email, registration field prints twice
+// also if name check is incorrect, it doesnt recognise valid name when trying again
 void displayPolicy(struct Policy& p, struct Customer& c) {
+	
+	srand(time(NULL));
 	std::fstream file;
+	bool flag = false;
+	char name[30];
 
-	std::cout << "\nCongratulations! Your insurance policy has been registered\n";
-	line2();
-	std::cout<< "Policy Number:  " << std::endl;	// need to generate random number
+	std::cout << "Please confirm your first name:   ";
+	std::cin >> name;
 
-file.open("customers.dat", std::ios::in|std::ios::binary);
-if(file.is_open()) {
-	file.read(reinterpret_cast<char*>(&c), sizeof(Customer));
-	file.close();
-} else {
-	std::cout << "\nUh oh. Data unavailable\n";
-}
+    file.open("customers.dat", std::ios::in|std::ios::binary);
 
-	std::cout<< "\n~~Driver's Details~~  " << std::endl;
-	std::cout<< "Name:  " << c.first_name << " " << c.last_name << std::endl;
-	std::cout<< "Date of birth:  " << c.birthday << std::endl; // fix this line
-	std::cout<< "Gender:  " << c.gender << std::endl;
-	std::cout<< "Contact number:  " << c.phone << std::endl;
-	std::cout<< "Email:  " << c.email << std::endl;
-	std::cout<< "Home address:  " << c.address << std::endl; // needs getline
-	std::cout<< "~~Vehicle Details~~  " << std::endl;
-	std::cout<< "Registration Number:  " << c.rego << std::endl;
-	std::cout<< "Make, Model & Year:  " << p.vehicle_details << std::endl;
+    if (file.is_open()) {
+
+					while(file.read(reinterpret_cast<char*>(&c), sizeof(Customer))) {
+            if ((strcmp(name, c.first_name) == 0)) {
+							p.policynum = rand() % 300 + 100;		// generate random number
+
+								std::cout << "\nCongratulations! Your insurance policy has been registered\n";
+								line2();
+								std::cout<< "Policy Number:  " << p.policynum << std::endl;	
+								std::cout<< "\n~~Driver's Details~~  " << std::endl;
+								std::cout<< "Name:  " << c.first_name << " " << c.last_name << std::endl;
+								std::cout<< "Gender:  " << c.gender << std::endl;
+								std::cout<< "Date of birth:  " << c.birthday << std::endl; // prints email aswell
+								std::cout<< "Email:  " << c.email << std::endl; 
+								std::cout<< "Contact number:  " << c.phone << std::endl;
+								std::cout<< "\n~~Vehicle Details~~  " << std::endl;
+								std::cout<< "Registration Number:  " << c.rego << std::endl; // prints twice
+								std::cout<< "Make, Model & Year:  " << p.vehicle_details << std::endl;
+								std::cout<< "Vehicle address:  " << c.address << std::endl; 
+								flag = true;
+								file.close();
+                break;
+                } else
+                    flag = false;
+					}
+
+    } else
+        std::cout << "\nFile error. Please contact admin\n";
+
+// end of function
 }
 
 // still need to define:

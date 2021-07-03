@@ -9,14 +9,14 @@ void adminLogin();
 void contact();
 bool customerValidation(char[], char[]);
 bool adminValidation(char[], char[]);
-void cLoginOutcome(bool);
+void cLoginOutcome(bool, struct Customer&);
 void aLoginOutcome(bool);
 
 // 2. Customer Registration Screen
-void readCustomer(struct Customer&);
+struct Customer& readCustomer(struct Customer&);
 
 // 3. Customer Screen
-void customerScreenMenu();
+void customerScreenMenu(struct Customer&);
 void benefitsMenu();
 
 // 4. Insurance Policy Screen
@@ -25,7 +25,7 @@ void displayQuote(struct Policy);
 int request(struct Policy&, struct Customer&);
 
 // 5. Claim Registration Screen
-void claimForm(struct Admin&);
+int claimForm(struct Admin&);
 
 // 6. Renewal Screen
 // to be defined

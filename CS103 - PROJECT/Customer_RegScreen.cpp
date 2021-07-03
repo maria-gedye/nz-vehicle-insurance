@@ -4,12 +4,8 @@
 #include "functions.h"  // import function prototypes
 #include "structures.h"  // import structures
 
-// ERRORS that need fixing:
-// registering new user skips username field in the login part
-// when dob is read from file, email hangs off it
-// when address is read only first word appears
 
-void readCustomer(struct Customer& c)  {
+struct Customer& readCustomer(struct Customer& c)  {
     std::fstream file;
 
         // Open the file 
@@ -64,4 +60,5 @@ void readCustomer(struct Customer& c)  {
     file.write(reinterpret_cast<char*>(&c), sizeof(c));
 
     file.close(); // closing the file 
+    return c;
 }

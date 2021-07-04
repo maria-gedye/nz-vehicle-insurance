@@ -7,10 +7,23 @@
 #include "structures.h"  // import structures
 
 
+// global variables
+char cus_name[30];
+int policy_num;
+int position = 0;
+
 // function definitions
-void customerScreenMenu(struct Customer& c) {
+void search_read() {
+    std::cin.ignore();
+    std::cout << "\n\nEnter the first/last name : ";
+    std::cin.getline(cus_name, 40);
+    std::cout << "\nEnter the policy number : ";
+    std::cin >> policy_num;
+}
+
+void customerScreenMenu() {
 		int option;
-		struct Policy p;
+		struct Customer c; // to be passed through new policy process
 		struct Admin a; // needs to pass thru function
 
 menu:
@@ -27,9 +40,9 @@ menu:
    
 	switch (option) {
 	case 1:
-		p = newPolicy(p); // form
-		displayQuote(p);
-		request(p, c); // user chooses to apply or not
+		// newPolicy(c); // write to file
+		// displayQuote(c); // read back file
+		// request(c); // user chooses to apply or not
 		goto menu;
 		break;
 	case 2:
@@ -37,12 +50,13 @@ menu:
 		goto menu;
 		break;
 	case 3:
-		// renewalInfo(); // display info
-		// renewalForm(); // form
+		// renewalInfo(); 
+		// search_read(); // find record
+		// renewalForm(policy_num, cus_name); // edit record
 		goto menu;
 		break;
 	case 4:
-		benefitsMenu(); // this needs to pass data from a fstream file
+		benefitsMenu(); 
 		goto menu;
 		break;
 	case 5:
@@ -117,193 +131,291 @@ if(file.is_open()) {
 	}
 }
 
-struct Policy newPolicy(struct Policy p) {
-	int policy, vehicle_type;
-	Admin display; 
-	std::fstream file;
+// // read from the user
+// void newPolicy(struct Customer& c) {
+// 	int policy, vehicle_type;
+// 	Admin display; 
+// 	std::fstream file;
+// 	std::fstream cfile;
 
-			std::cout << "\n\t\tNEW POLICY APPLICATION";
-			line();
+// 			std::cout << "\n\t\tNEW POLICY APPLICATION";
+// 			line();
 
-// ask user to select policy category
-p_menu:
-			std::cout << "\n\n";
-			std::cout << "Current Policy Information & Vehicle Rates \n";
-			line2();
-						std::cout << "\nPlease read through info before choosing the right policy for you (recommend viewing in full-screen)\n\n";
-// READ from Admin file
-file.open("admins.dat", std::ios::in|std::ios::binary);
-if(file.is_open()) {
-	file.read(reinterpret_cast<char*>(&display), sizeof(Admin));
-	file.close();
-} else {
-	std::cout << "\nOops. Policy description unavailable\n";
-}
-	std::cout << display.policy_description << std::endl;
+// // ask user to select policy category
+// p_menu:
+// 			std::cout << "\n\n";
+// 			std::cout << "Current Policy Information & Vehicle Rates \n";
+// 			line2();
+// 						std::cout << "\nPlease read through info before choosing the right policy for you (recommend viewing in full-screen)\n\n";
+// // READ from Admin file
+// file.open("admins.dat", std::ios::in|std::ios::binary);
+// 	if(file.is_open()) {
+// 		file.read(reinterpret_cast<char*>(&display), sizeof(Admin));
+// 		file.close();
+		
+// } else {
+// 	std::cout << "\nOops. Policy description unavailable\n";
+// }
+// 	std::cout << display.policy_description << std::endl;
 
-			std::cout << "\nChoose a policy category:  ";
-			std::cin >> policy;
+// 			std::cout << "\nChoose a policy category:  ";
+// 			std::cin >> policy;
 
-// switch case to assign fixed rate for policy type
-			switch(policy) {
-				case 1:
-					p.category = "Comprehensive";
-					p.category_rate = 0.055;	
-					break;
-				case 2:
-					p.category = "Third Party, Fire & Theft";
-					p.category_rate = 0.044;  
-					break;
-				case 3:
-					p.category = "Third Party Only";
-					p.category_rate = 0.033;  
-					break;
-				default:
-					std::cout << "\nSorry, please choose from options 1-3\n";
-					goto p_menu;
-					break;
-			}
+// cfile.open("customers.dat", std::ios::out|std::ios::app|std::ios::binary);
 
-// ask user to select vehicle category
-v_menu:
+// // switch case to assign fixed rate for policy type
+// 			switch(policy) {
+// 				case 1:
+// 					c.plcy->category = "Comprehensive";
+// 					c.plcy->category_rate = 0.055;	
+// 					break;
+// 				case 2:
+// 					c.plcy->category = "Third Party, Fire & Theft";
+// 					c.plcy->category_rate  = 0.044;  
+// 					break;
+// 				case 3:
+// 					c.plcy->category = "Third Party Only";
+// 					c.plcy->category_rate = 0.033;  
+// 					break;
+// 				default:
+// 					std::cout << "\nSorry, please choose from options 1-3\n";
+// 					goto p_menu;
+// 					break;
+// 			}
 
-			std::cout << "\nChoose vehicle type:  ";
-			std::cin >> vehicle_type;
+// // ask user to select vehicle category
+// v_menu:
 
-// switch case to assign fixed rate for vehicle
-			switch (vehicle_type) {
-				case 1:
-					p.vehicle = "Car";
-					p.vehicle_rate = 500.00;  
-					break;
-				case 2:
-					p.vehicle = "Motorcycle";
-					p.vehicle_rate = 250.00;	
-					break;
-				default:
-					std::cout << "\nSorry please choose from option 1 or 2\n";
-					goto v_menu;
-					break;
-			}
+// 			std::cout << "\nChoose vehicle type:  ";
+// 			std::cin >> vehicle_type;
 
-			std::cout << "\nWhen would you like the policy to start? (dd/mm/yyyy) \n";
-			std::cin >> p.date;
+// // switch case to assign fixed rate for vehicle
+// 			switch (vehicle_type) {
+// 				case 1:
+// 					c.plcy->vehicle = "Car";
+// 					c.plcy->vehicle_rate = 500.00;  
+// 					break;
+// 				case 2:
+// 					c.plcy->vehicle  = "Motorcycle";
+// 					c.plcy->vehicle_rate = 250.00;	
+// 					break;
+// 				default:
+// 					std::cout << "\nSorry please choose from option 1 or 2\n";
+// 					goto v_menu;
+// 					break;
+// 			}
 
-			std::cout << "\nEnter car/motorcycle details: (Make, Model & Year) \n";
-			std::cin.ignore();
-			std::cin.getline(p.vehicle_details, 50);
+// 			std::cout << "\nWhen would you like the policy to start? (dd/mm/yyyy) \n";
+// 			std::cin >> c.plcy->date;
 
-			std::cout << "\nHow much is the vehicle worth? \n";
-			std::cin >> p.sum_insured;
+// 			std::cout << "\nEnter car/motorcycle details: (Make, Model & Year) \n";
+// 			std::cin.ignore();
+// 			std::cin.getline(c.plcy->vehicle_details, 50);
 
+// 			std::cout << "\nHow much is the vehicle worth? \n";
+// 			std::cin >> c.plcy->sum_insured;
 
-			return p;	
-}
+// cfile.write(reinterpret_cast<char*>(&c), sizeof(c)); // write new policy info
+// cfile.close();
+// }
 
-void displayQuote(struct Policy p) {
+// void displayQuote(struct Customer& c) {
+// std::fstream cfile;
+// cfile.open("customers.dat", std::ios::out|std::ios::app|std::ios::binary);
 
-// calculate annual, monthly and fortnightly prices
- p.annual = (p.sum_insured * p.category_rate) + p.vehicle_rate;
- p.monthly = p.annual / 12;
- p.fortnightly = (p.annual / 52) * 2;
+// // calculate annual, monthly and fortnightly prices
+//  c.plcy->annual = (c.plcy->sum_insured * c.plcy->category_rate) + c.plcy->vehicle_rate;
+//  c.plcy->monthly = c.plcy->annual / 12;
+//  c.plcy->fortnightly = (c.plcy->annual / 52) * 2;
 
-// display the quote and above calculations
-			std::cout << "\n\t\tYOUR INSURANCE POLICY QUOTE";
-			line();
-			std::cout << "\n\n";
-			std::cout << "Your chosen policy: " << p.category << " " << p.vehicle << std::endl;
-			std::cout << "\n$" << p.fortnightly << " per fortnight" << std::endl;
-			std::cout << "...or $" << p.monthly << " per month" << std::endl;
-			std::cout << "...or $" << p.annual << " per year" << std::endl;
+// // display the quote and above calculations
+// 			std::cout << "\n\t\tYOUR INSURANCE POLICY QUOTE";
+// 			line();
+// 			std::cout << "\n\n";
+// 			std::cout << "Your chosen policy: " << c.plcy->category << " " << c.plcy->vehicle << std::endl;
+// 			std::cout << "\n$" << c.plcy->fortnightly<< " per fortnight" << std::endl;
+// 			std::cout << "...or $" << c.plcy->monthly << " per month" << std::endl;
+// 			std::cout << "...or $" << c.plcy->annual << " per year" << std::endl;
 
-// end of function
-}
+// cfile.write(reinterpret_cast<char*>(&c), sizeof(c)); // write new policy info
+// cfile.close();
+// // end of function
+// }
 
-int request(struct Policy& p, struct Customer& c) {
-	start:
-		char answer;
-		int answer2;
-			std::cout << "\nWould you like to go ahead with this quote and register this policy? (y/n)" << std::endl;
-			std::cin >> answer;
-			if (answer == 'n') {
-			menu:
-				std::cout << "\nWould you like to: " << std::endl;
-				std::cout << "1 = Start a new quote " << std::endl;
-				std::cout << "2 = Go back to Customer Menu" << std::endl;
-				std::cin >> answer2;
+// int request(struct Customer& c) {
+// 	start:
+// 		char answer;
+// 		int answer2;
+// 			std::cout << "\nWould you like to go ahead with this quote and register this policy? (y/n)" << std::endl;
+// 			std::cin >> answer;
+// 			if (answer == 'n') {
+// 			menu:
+// 				std::cout << "\nWould you like to: " << std::endl;
+// 				std::cout << "1 = Start a new quote " << std::endl;
+// 				std::cout << "2 = Go back to Customer Menu" << std::endl;
+// 				std::cin >> answer2;
 
-				switch(answer2) {
-					case 1:
-						newPolicy(p);
-						displayQuote(p);
-						goto start;
-						break;
-					case 2:
-						customerScreenMenu(c);
-						break;
-					default:
-						std::cout << "\nPlease choose option 1 or 2" << std::endl;
-						std::cout << answer2 << std::endl;
-						goto menu;
-						break;
-				}
-			} else if (answer == 'y') {
-				displayPolicy(p, c);
-			} else {
-				std::cout << "\nSorry please type 'y' for yes or 'n' for no " << std::endl;
-				goto start;
-			}
+// 				switch(answer2) {
+// 					case 1:
+// 						newPolicy(c);
+// 						displayQuote(c);
+// 						goto start;
+// 						break;
+// 					case 2:
+// 						customerScreenMenu();
+// 						break;
+// 					default:
+// 						std::cout << "\nPlease choose option 1 or 2" << std::endl;
+// 						std::cout << answer2 << std::endl;
+// 						goto menu;
+// 						break;
+// 				}
+// 			} else if (answer == 'y') {
+// 				displayPolicy();
+// 			} else {
+// 				std::cout << "\nSorry please type 'y' for yes or 'n' for no " << std::endl;
+// 				goto start;
+// 			}
 
-			return answer2;
-}
+// 			return answer2;
+// }
 
-// ERRORS: 
-// dob field also prints email, registration field prints twice
-// also if name check is incorrect, it doesnt recognise valid name when trying again
-void displayPolicy(struct Policy& p, struct Customer& c) {
+// // TEST THIS**
+// // ERRORS: 
+// // dob field also prints email, registration field prints twice
+// // also if name check is incorrect, it doesnt recognise valid name when trying again
+// void displayPolicy() {
 	
-	srand(time(NULL));
-	std::fstream file;
-	bool flag = false;
-	char name[30];
+// 	srand(time(NULL));
+// 	std::fstream file;
+// 	bool flag = false;
+// 	char fname[20];
+// 	char lname[20];
+// 	Customer cus;
 
-	std::cout << "Please confirm your first name:   ";
-	std::cin >> name;
+// 	std::cout << "Please confirm your first name:   ";
+// 	std::cin >> fname;
+// 	std::cout << "And last name:   ";
+// 	std::cin >> lname;
 
-    file.open("customers.dat", std::ios::in|std::ios::binary);
+//     file.open("customers.dat", std::ios::out|std::ios::in|std::ios::binary);
 
-    if (file.is_open()) {
+//     if (file.is_open()) {
 
-					while(file.read(reinterpret_cast<char*>(&c), sizeof(Customer))) {
-            if ((strcmp(name, c.first_name) == 0)) {
-							p.policynum = rand() % 300 + 100;		// generate random number
+// 					while(!file.eof()) {
+// 						file.read(reinterpret_cast<char*>(&cus), sizeof(Customer));
 
-								std::cout << "\nCongratulations! Your insurance policy has been registered\n";
-								line2();
-								std::cout<< "Policy Number:  " << p.policynum << std::endl;	
-								std::cout<< "\n~~Driver's Details~~  " << std::endl;
-								std::cout<< "Name:  " << c.first_name << " " << c.last_name << std::endl;
-								std::cout<< "Gender:  " << c.gender << std::endl;
-								std::cout<< "Date of birth:  " << c.birthday << std::endl; // prints email aswell
-								std::cout<< "Email:  " << c.email << std::endl; 
-								std::cout<< "Contact number:  " << c.phone << std::endl;
-								std::cout<< "\n~~Vehicle Details~~  " << std::endl;
-								std::cout<< "Registration Number:  " << c.rego << std::endl; // prints twice
-								std::cout<< "Make, Model & Year:  " << p.vehicle_details << std::endl;
-								std::cout<< "Vehicle address:  " << c.address << std::endl; 
-								flag = true;
-								file.close();
-                break;
-                } else
-                    flag = false;
-					}
+//             	if ((strcmp(fname, cus.first_name) == 0) && (strcmp(lname, cus.last_name) == 0)) {
 
-    } else
-        std::cout << "\nFile error. Please contact admin\n";
+// 							cus.plcy->policynum = rand() % 300 + 100;		// generate random number
 
-// end of function
-}
+// 							std::cout << "\nCongratulations! Your policy has been registered\n";
+// 							line2();
+// 							std::cout<< "Policy Number:  " << cus.plcy->policynum << std::endl;	
+// 							std::cout<< "\n~~Driver's Details~~  " << std::endl;
+// 							std::cout<< "Name:  " << cus.first_name << " " << cus.last_name << std::endl;
+// 							std::cout<< "Gender:  " << cus.gender << std::endl;
+// 							std::cout<< "Date of birth:  " << cus.birthday << std::endl; // prints email aswell
+// 							std::cout<< "Email:  " << cus.email << std::endl; 
+// 							std::cout<< "Contact number:  " << cus.phone << std::endl;
+// 							std::cout<< "\n~~Vehicle Details~~  " << std::endl;
+// 							std::cout<< "Registration Number:  " << cus.rego << std::endl; // prints twice
+// 							std::cout<< "Make, Model & Year:  " << cus.plcy->vehicle_details << std::endl;
+// 							std::cout<< "Vehicle address:  " << cus.address << std::endl; 
+// 							flag = true;
+// 							file.close();
+// 							break;
+// 							} else
+// 									flag = false;
+// 					}
 
-// still need to define:
-// void renewalInfo();
-// void renewalForm();
+//     } else
+//         std::cout << "\nFile error. Please contact admin\n";
+
+// // end of function
+// }
+
+// void renewalInfo() {
+// 	std::cout << "\n\t\tThe Renewal process:" << std::endl;
+// 	line();
+// 	std::cout << "Select which current policy you'd like to renew, confirm your personal details and add payment details" << std::endl;
+// 	std::cout << "\nIf you choose to change policy category(go from comprehensive to third party only), this will affect how much you need to pay\n" << std::endl;
+
+// }
+
+// // CHECK THIS
+// void renewalForm(int policy_num, char cus_name[]) {
+// 	Customer cus;
+// 	int policy;
+// 	bool flag = false;
+// 	std::fstream file;
+
+// 	file.open("customers.dat", std::ios::in|std::ios::out|std::ios::binary);
+
+// 	if(file.is_open()) {
+// 		while(!file.eof()) {
+			
+// 			file.read(reinterpret_cast<char*>(&cus), sizeof(cus));
+// 			position = file.tellg(); 
+
+// 			if((strcmp(cus_name, cus.first_name) == 0) || (strcmp(cus_name, cus.last_name) == 0)) {
+// 				if (policy_num == cus.plcy->policynum) {
+// 							std::cout << "\n\t\t**Your current policy**" << std::endl;
+// 							std::cout << "\nDriver's Name:  " << cus.first_name << " " << cus.last_name << std::endl;
+// 							std::cout << "Contact Number:  " << cus.phone << std::endl;
+// 							std::cout << "Policy Type:  " << cus.plcy->category << " " << cus.plcy->vehicle << std::endl;
+// 							std::cout << "Vehicle Details:  " << cus.plcy->vehicle_details << std::endl;
+
+// 							file.seekp(position-(sizeof(cus)));
+
+// 							std::cout << "\n\t\tRenewal form\n" << std::endl;
+// 							line();
+// 							std::cout << "\nDriver's First Name:  ";
+// 							std::cin >> cus.first_name;
+// 							std::cout << "\nDriver's Last Name:  ";
+// 							std::cin >> cus.last_name;
+// 							std::cout << "\nContact Number:  ";
+// 							std::cin >> cus.phone;
+// 				p_menu:
+// 							std::cout << "\nChoose a policy category (1.Comprehensive, 2.Third Party, Fire & Theft, 3.Third Party Only):  ";
+// 							std::cin >> policy;
+
+// 				// switch case to assign fixed rate for policy type
+// 							switch(policy) {
+// 								case 1:
+// 									cus.plcy->category = "Comprehensive";
+// 									cus.plcy->category_rate = 0.055;	
+// 									break;
+// 								case 2:
+// 									cus.plcy->category = "Third Party, Fire & Theft";
+// 									cus.plcy->category_rate = 0.044;  
+// 									break;
+// 								case 3:
+// 									cus.plcy->category= "Third Party Only";
+// 									cus.plcy->category_rate = 0.033;  
+// 									break;
+// 								default:
+// 									std::cout << "\nSorry, please choose from options 1-3\n";
+// 									goto p_menu;
+// 									break;
+// 							}
+// 							std::cout << "\nAdd card number (16 digits, no spaces):  ";
+// 							std::cin >> cus.visa;
+
+// 							file.write(reinterpret_cast<char*>(&cus), sizeof(cus));
+// 							flag = false;
+// 							break;
+// 				} // policy num check statement
+// 			} else // name check statement
+// 			flag = true;
+// 		} // end of file
+// 	} else // file is not open
+// 			std::cout << "\nFile not found\n";
+
+// 	if(flag) {
+// 					std::cout << "\nCannot find Customer policy\n";
+// 	}
+
+// 	file.close();
+
+// }

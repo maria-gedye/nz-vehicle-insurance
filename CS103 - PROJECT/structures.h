@@ -2,37 +2,6 @@
 #include <fstream>
 #include <string>
 
-// structure for customer information 
-struct Customer{
-    char first_name[20], 
-				last_name[20], 
-				user_name[30],	// needs to be char [] for comparison
-				password[30],	// needs to be char [] for comparison
-				gender[6], 
-				birthday[10], 
-				email[30], 
-  		  phone[14],
-				rego[6],
-				licence[8],
-				address[45];
-};
-
-// structure for admin capabilities
-struct Admin {
-	char user_name[20],
-			password[20],
-			discount_signup[220],
-			discount_multi[292],
-			discount_renewal[145],
-			discount_review[286],
-			discount_friend[295],
-			policy_description[355];
-	int customer_counter,
-			claim_counter,
-			renewal_counter,
-			new_reg_counter;
-};
-
 // structure for new policies
 struct Policy {	
 	std::string category;
@@ -58,5 +27,39 @@ struct Claims {
 				email[30],
 				phone[14];
     int policynum; 
-
 };
+
+// structure for customer information 
+struct Customer{
+    char first_name[20], 
+				last_name[20], 
+				user_name[30],	// needs to be char [] for comparison
+				password[30],	// needs to be char [] for comparison
+				gender[6], 
+				birthday[10], 
+				email[30], 
+  		  phone[14],
+				rego[6],
+				licence[8],
+				address[45],
+				visa[16];
+		struct Policy plcy[2];  // defined above
+		struct Claims clm[2];	// defined above
+};
+
+// structure for admin capabilities
+struct Admin {
+	char user_name[20],
+			password[20],
+			discount_signup[220],
+			discount_multi[292],
+			discount_renewal[145],
+			discount_review[286],
+			discount_friend[295],
+			policy_description[355];
+	int customer_counter,
+			claim_counter,
+			renewal_counter,
+			new_reg_counter;
+};
+

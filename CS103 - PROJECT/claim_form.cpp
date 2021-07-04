@@ -56,7 +56,7 @@ int claimForm(struct Admin& a)
 
     file.write(reinterpret_cast<char*>(&info), sizeof(Claims)); // test that this is writing to the file
     file.close(); 
-        std::cout << "\nThank you, your claim is now being processed. We will contact you in 48hrs\n";
+        std::cout << "\nThank you, your claim is now being processed. We will contact you in 48hrs.\n";
     c = a.claim_counter++;  // for every claim written to file, increase by 1
 
     } else {

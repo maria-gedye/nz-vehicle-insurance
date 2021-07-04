@@ -5,7 +5,8 @@
 #include "structures.h"  // import structures
 
 
-struct Customer& readCustomer(struct Customer& c)  {
+void readCustomer()  {
+    Customer c;
     std::fstream file;
 
         // Open the file 
@@ -60,5 +61,4 @@ struct Customer& readCustomer(struct Customer& c)  {
     file.write(reinterpret_cast<char*>(&c), sizeof(c));
 
     file.close(); // closing the file 
-    return c;
 }

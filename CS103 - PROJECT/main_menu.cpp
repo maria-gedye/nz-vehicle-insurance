@@ -12,6 +12,7 @@ const int SIZE = 20;
 // main function below...
 int main ()
 {
+
     adminSetup(); // write default insurance info & admin login
     menu(); // calling the menu function 
 
@@ -67,7 +68,6 @@ file.open("admins.dat", std::ios::out |std::ios::binary);
 
 void menu() // menu for the user to choose from 
 {
-    Customer c;
 
 start:
     std::cout << "\n\t\tEvolve Insurance";
@@ -93,17 +93,17 @@ retry:
 
         if (choice2 == 1) {
 
-            c = readCustomer(c);
+            readCustomer();
             customerLogin();
             cflag = customerValidation(username, password);
-            cLoginOutcome(cflag, c);
+            cLoginOutcome(cflag);
             goto start;
 
         } else if (choice2 == 2) {
         std::cin.ignore();
         customerLogin();
         cflag = customerValidation(username, password);
-        cLoginOutcome(cflag, c);
+        cLoginOutcome(cflag);
         goto start;
 
         } else {
@@ -200,13 +200,13 @@ bool customerValidation(char field1[30], char field2[30]) {
     return flag;
 }
 
-void cLoginOutcome(bool f, struct Customer& c) {
+void cLoginOutcome(bool f) {
     int count = 0;
 
 start:
     if (f) {
         std::cout << "\n** Log in successful **" << std::endl;
-        customerScreenMenu(c);
+        customerScreenMenu();
     } else {
         std::cout << "\nSorry, username or password was wrong. Press enter to try again" << std::endl; 
         count++;

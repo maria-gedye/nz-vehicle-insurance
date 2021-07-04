@@ -132,6 +132,7 @@ void newRegReport() {
   std::cout << "\nTotal new customers registered:  " << a.new_reg_counter << std::endl;
 }
 
+// Debug: When new info is published, it overrides all the other default fields to be empty
 void updateMenu() {
   std::fstream file;
   Admin a;
@@ -193,7 +194,7 @@ file.open("admins.dat", std::ios::out|std::ios::binary);
         goto retry;
         break;
     }
-// Debug: When new info is published the other default fields are empty
+// Debug: When new info is published, it overrides all the other default fields to be empty
 publish:
     std::cout << "Would you like to publish these changes? (y/n)  ";
     std::cin >> answer;

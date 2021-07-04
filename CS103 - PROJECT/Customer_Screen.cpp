@@ -305,5 +305,5 @@ void displayPolicy(struct Policy& p, struct Customer& c) {
 }
 
 // still need to define:
-// void renewalInfo();
-// void renewalForm();
+void renewalInfo();
+void renewalForm();

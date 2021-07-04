@@ -28,7 +28,6 @@ int request(struct Policy&, struct Customer&);
 int claimForm(struct Admin&);
 
 // 6. Renewal Screen
-// to be defined
 void renewalInfo();
 void renewalForm();
 

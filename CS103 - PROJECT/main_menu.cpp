@@ -85,31 +85,7 @@ start:
         switch(user_choice) // switch case for the implementation of the appropriate menus 
     {
         case 1:
-retry:
-        std::cout << "\nRegister as new customer / Customer login" << std::endl;
-        line2();
-        std::cout << "\nPress 1 to REGISTER or 2 to LOG IN:   ";
-        std::cin >> choice2;
-
-        if (choice2 == 1) {
-
-            readCustomer();
-            customerLogin();
-            cflag = customerValidation(username, password);
-            cLoginOutcome(cflag);
-            goto start;
-
-        } else if (choice2 == 2) {
-        std::cin.ignore();
-        customerLogin();
-        cflag = customerValidation(username, password);
-        cLoginOutcome(cflag);
-        goto start;
-
-        } else {
-            std::cout << "\nWhat was that? Please choose option 1 or 2\n" << std::endl;
-            goto retry;
-        }
+        loginMenu();
         break;
 
         case 2: 
@@ -129,6 +105,38 @@ retry:
         std::cout << "Please input a valid option \n\n";
         goto start;
     }
+}
+
+void loginMenu() {
+    int choice;
+
+start:
+        std::cout << "\nRegister as new customer / Customer login" << std::endl;
+        line2();
+        std::cout << "\nPress 1 to REGISTER or 2 to LOG IN:   ";
+        std::cin >> choice;
+
+            switch(choice) {
+                case 1:
+                    readCustomer();
+                    customerLogin();
+                    cflag = customerValidation(username, password);
+                    cLoginOutcome(cflag);
+                    goto start;
+                    break;
+                case 2:
+                    std::cin.ignore();
+                    customerLogin();
+                    cflag = customerValidation(username, password);
+                    cLoginOutcome(cflag);
+                    break;
+                default:
+                    std::cout << "\nPlease choose option 1 or 2\n" << std::endl;
+                    std::cin.clear();
+                    std::cin.ignore();
+                    goto start;
+                    break;
+            }
 }
 
 void customerLogin() // login details 

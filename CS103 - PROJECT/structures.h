@@ -43,8 +43,8 @@ struct Customer{
 				licence[8],
 				address[45],
 				visa[16];
-		struct Policy plcy[2];  // defined above
-		struct Claims clm[2];	// defined above
+		// struct Policy plcy[2];  // defined above
+		// struct Claims clm[2];	// defined above
 };
 
 // structure for admin capabilities

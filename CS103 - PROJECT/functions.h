@@ -5,6 +5,7 @@ void line2(); // x3 line()
 // 1. Introduction Screen
 void adminSetup();
 void menu();
+void loginMenu();
 void customerLogin();
 void adminLogin();
 void contact();
@@ -22,15 +23,15 @@ void benefitsMenu();
 void search_read();
 
 // 4. Insurance Policy Screen
-// void newPolicy(struct Customer&);
-// void displayQuote(struct Customer&); 
-// int request(struct Customer&);
+struct Policy newPolicy();
+void displayQuote(struct Policy); 
+int request();
 
 // 5. Claim Registration Screen
 int claimForm(struct Admin&);
 
 // 6. Renewal Screen
-// void renewalInfo();
+void renewalInfo();
 // void renewalForm(int, char[]); // 
 
 // 7. Admin Screen

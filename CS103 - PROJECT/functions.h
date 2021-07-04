@@ -25,22 +25,22 @@ void search_read();
 // 4. Insurance Policy Screen
 struct Customer newPolicy();
 void displayQuote(struct Customer); 
-int registerPolicy();     // errors
+int registerPolicy();   
 
 // 5. Claim Registration Screen
 int claimForm(struct Admin&);
 
 // 6. Renewal Screen
 void renewalInfo();
-void renewalForm(char[], char[]); 
+void renewalForm(char[], char[]);   // needs debugging
 
 // 7. Admin Screen
 void adminScreenMenu();
 void customerReport();
-void claimsReport(int); 
-void renewalsReport(); // setup counters to work for these 3 reports
-void newRegReport();
+void claimsReport(int); // error
+void renewalsReport(); // error
+void newRegReport(); // error
 void updateMenu(); // needs debugging
 
 // 8. Policy Registation Screen
-void displayPolicy(char[], char[]);  
+void displayPolicy(char[], char[]);  // needs debugging

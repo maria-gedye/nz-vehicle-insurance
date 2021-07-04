@@ -2,20 +2,22 @@
 #include <fstream>
 #include <string>
 
-// structure for new policies
-struct Policy {	
-	std::string category;
-	std::string vehicle;
-	char date[10],
-			vehicle_details[50];
-	float category_rate,
-			vehicle_rate,
-			annual, 
-			monthly, 
-			fortnightly;
-	double sum_insured;
-	int policynum; 
-};
+// // structure for new policies
+// struct Policy {	
+// 	std::string category;
+// 	std::string vehicle;
+// 	char date[10],
+// 			vehicle_details[50],
+// 			first_name[20],
+// 			last_name[20];
+// 	float category_rate,
+// 			vehicle_rate,
+// 			annual, 
+// 			monthly, 
+// 			fortnightly;
+// 	double sum_insured;
+// 	int policynum; 
+// };
 
 // claims structure
 struct Claims { 
@@ -42,7 +44,18 @@ struct Customer{
 				rego[6],
 				licence[8],
 				address[45],
-				visa[16];
+				visa[16],
+				policy_date[10],  // new change
+				vehicle_details[50];
+	std::string category;
+	std::string vehicle;
+	float category_rate,
+			vehicle_rate,
+			annual, 
+			monthly, 
+			fortnightly;
+	double sum_insured;
+	int policynum; 
 		// struct Policy plcy[2];  // defined above
 		// struct Claims clm[2];	// defined above
 };
